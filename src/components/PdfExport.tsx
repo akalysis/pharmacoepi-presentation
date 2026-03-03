@@ -28,6 +28,7 @@ export default function PdfExport() {
             const originalDisplay = element.style.display;
             element.classList.add('print-mode');
 
+            // @ts-ignore
             await html2pdf().set(opt).from(element).save();
 
             element.classList.remove('print-mode');
