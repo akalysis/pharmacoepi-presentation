@@ -1,26 +1,309 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary: #3b82f6;
+  --secondary: #f43f5e;
+  --accent: #10b981;
+  --bg-dark: #0f172a;
+  --text-main: #f8fafc;
+  --glass-bg: rgba(30, 41, 59, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a, #1e293b);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  margin: 0;
+  overflow: hidden;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2em;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.badge {
+  background: var(--primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mcq-btn {
+  background: var(--glass-bg);
+  color: white;
+  border: 1px solid var(--glass-border);
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  margin: 5px 0;
+  text-align: left;
+  font-size: 22px;
+}
+
+.mcq-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: var(--primary);
+  transform: translateX(10px);
+}
+
+.mcq-feedback {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 20px;
+  animation: fadeIn 0.5s;
+}
+
+.mcq-feedback.correct {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.mcq-feedback.incorrect {
+  background: rgba(244, 63, 94, 0.2);
+  border: 1px solid var(--secondary);
+  color: #ff7b93;
+}
+
+.flex-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.text-highlight {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.concept-box {
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 5px solid var(--primary);
+  padding: 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 15px 0;
+}
+
+.problem-box {
+  background: rgba(244, 63, 94, 0.1);
+  border-left: 5px solid var(--secondary);
+  padding: 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 15px 0;
+}
+
+.solution-box {
+  background: rgba(16, 185, 129, 0.1);
+  border-left: 5px solid var(--accent);
+  padding: 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 15px 0;
+}
+
+/* Infographic Styles */
+.stat-box {
+  text-align: center;
+  padding: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.stat-number {
+  font-size: 4em;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #94a3b8;
+}
+
+.timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  background-color: var(--glass-border);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -3px;
+  border-radius: 3px;
+}
+
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: -10px;
+  background-color: var(--bg-dark);
+  border: 4px solid var(--primary);
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.timeline-left {
+  left: 0;
+}
+
+.timeline-right {
+  left: 50%;
+}
+
+.timeline-right::after {
+  left: -10px;
+}
+
+.timeline-content {
+  padding: 20px 30px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  position: relative;
+}
+
+.timeline-date {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 15px;
+}
+
+.flow-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: nowrap;
+}
+
+.flow-node {
+  background: var(--glass-bg);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.flow-node h4 {
+  margin: 10px 0 5px;
+  font-size: 24px;
+}
+
+.flow-arrow {
+  font-size: 40px;
+  color: var(--glass-border);
+  animation: pulseArrow 2s infinite;
+}
+
+@keyframes pulseArrow {
+  0% {
+    transform: translateX(0);
+    color: var(--glass-border);
+  }
+
+  50% {
+    transform: translateX(10px);
+    color: var(--primary);
+  }
+
+  100% {
+    transform: translateX(0);
+    color: var(--glass-border);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
